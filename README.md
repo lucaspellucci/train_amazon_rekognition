@@ -13,6 +13,11 @@ export AWS_SECRET_ACCESS_KEY=wJalrXU***
 export AWS_DEFAULT_REGION=ap-southeast-2
 
 ## Usage
-make run
+* Create a /img folder with the images you want to train
 
-* will print ec2 describe and sts caller
+make run RUN_OPT=collection-name
+
+* will add all image to the collection called "collection-name" and add the same as ExternalID
+
+## TODO
+Get ExternalID from a different parameter, possibily File Name

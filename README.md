@@ -1,5 +1,5 @@
-# docker_template
-Simple example that runs python script
+# Train Rekognition with Face Images
+Simple example that adds faces from image files to Amazon Rekognition Collections
 
 
 ## Build

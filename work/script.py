@@ -5,8 +5,6 @@ import sys
 import os
 import base64
 
-#rekognition_collection_id = sys.argv[1]
-
 def main(argv):
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-c','--collection', action='store', dest='collection', help='Amazon Rekognition Collection Name', required=True)
@@ -18,9 +16,7 @@ def main(argv):
 
 	list_collections(client)
 	create_collection(client,rekognition_collection_id)
-	print_files(client)
-
-
+	print_files(client,rekognition_collection_id)
 
 
 def list_collections(client):
@@ -35,20 +31,21 @@ def create_collection(client,rekognition_collection_id):
 	except botocore.exceptions.ClientError as e:
 		print ('Collections creation failed: {0}'.format(e))
 
-def print_files(client):
+def print_files(client,rekognition_collection_id):
 	for entry in os.scandir('/img'):
-		if entry.is_file() and entry.name.lower().endswith(('.jpg','jpeg','.png')):
+		if entry.is_file() and entry.name.lower().endswith(('.jpg','.png')):
 			with open(entry, "rb") as image_file:
 				img_base64 = image_file.read()
-				facial_recognition(client,img_base64)
+				ext_id = entry.name.lower()[:-4]
+				facial_recognition(client,img_base64,rekognition_collection_id,ext_id)
 
-def facial_recognition(client,img_base64):
+def facial_recognition(client,img_base64,rekognition_collection_id,ext_id):
 	response = client.index_faces(
 		CollectionId=rekognition_collection_id,
 		Image={
 			'Bytes': img_base64
 		},
-		ExternalImageId=rekognition_collection_id,
+		ExternalImageId=ext_id,
 		DetectionAttributes=['ALL']
 	)
 	for face in response['FaceRecords']:

@@ -1,6 +1,5 @@
-# Train Rekognition with Face Images
+# Train Amazon Rekognition with Face Images
 Simple example that adds faces from image files to Amazon Rekognition Collections
-
 
 ## Build
 make (build|rebuild)

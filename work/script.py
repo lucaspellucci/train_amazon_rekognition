@@ -16,18 +16,18 @@ def main(argv):
 	rekognition_collection_id = args.collection
 
 
-	list_collections()
-	create_collection(rekognition_collection_id)
-	print_files()
+	list_collections(client)
+	create_collection(client,rekognition_collection_id)
+	print_files(client)
 
 
 
 
-def list_collections():
+def list_collections(client):
 	response = client.list_collections()
 	print (response)
 
-def create_collection(rekognition_collection_id):
+def create_collection(client,rekognition_collection_id):
 	try:
 		response = client.create_collection(
 			CollectionId=rekognition_collection_id
@@ -35,14 +35,14 @@ def create_collection(rekognition_collection_id):
 	except botocore.exceptions.ClientError as e:
 		print ('Collections creation failed: {0}'.format(e))
 
-def print_files():
+def print_files(client):
 	for entry in os.scandir('/img'):
 		if entry.is_file() and entry.name.lower().endswith(('.jpg','jpeg','.png')):
 			with open(entry, "rb") as image_file:
 				img_base64 = image_file.read()
-				facial_recognition(img_base64)
+				facial_recognition(client,img_base64)
 
-def facial_recognition(img_base64):
+def facial_recognition(client,img_base64):
 	response = client.index_faces(
 		CollectionId=rekognition_collection_id,
 		Image={

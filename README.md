@@ -19,4 +19,4 @@ make run RUN_OPT=collection-name
 * will add all image to the collection called "collection-name" and add the same as ExternalID
 
 ## TODO
-Get ExternalID from a different parameter, possibily File Name
+Get ExternalID from a different parameter, possibily File Name.

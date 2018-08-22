@@ -11,6 +11,14 @@ export AWS_SECRET_ACCESS_KEY=wJalrXU***
 
 export AWS_DEFAULT_REGION=ap-southeast-2
 
+Alternatively, you can print the creds from the AWS cli and copy the export commands:
+
+make print-creds  #for default profile
+or
+make print-creds PROFILE=my_profile
+
+
+
 ## Usage
 * Create a /img folder with the images you want to train
 

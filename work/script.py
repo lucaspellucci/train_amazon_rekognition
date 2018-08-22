@@ -1,12 +1,26 @@
+import argparse
 import boto3
 import botocore
 import sys
 import os
 import base64
 
-rekognition_collection_id = sys.argv[1]
+#rekognition_collection_id = sys.argv[1]
 
-client = boto3.client('rekognition')
+def main(argv):
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-c','--collection', action='store', dest='collection', help='Amazon Rekognition Collection Name', required=True)
+	args = parser.parse_args()
+
+	client = boto3.client('rekognition')
+	rekognition_collection_id = args.collection
+
+
+	list_collections()
+	create_collection(rekognition_collection_id)
+	print_files()
+
+
 
 
 def list_collections():
@@ -42,7 +56,4 @@ def facial_recognition(img_base64):
 		print("Face ID: %s" % face_id)
 
 
-
-list_collections()
-create_collection(rekognition_collection_id)
-print_files()
+main(sys.argv[1:])
